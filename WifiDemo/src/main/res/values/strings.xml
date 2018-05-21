@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WifiDemo</string>
+    <string name="scan_wifi_name">WiFi名:%s</string>
+    <string name="scan_wifi_level">信号:%sdbm</string>
+</resources>

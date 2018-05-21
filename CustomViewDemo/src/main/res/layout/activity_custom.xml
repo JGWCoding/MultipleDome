@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.rair.customview.view.MukeChart
+        android:id="@+id/columnView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:graphTitle="Android绘图"
+        app:xAxisName="天"
+        app:yAxisName="营业额/万元"
+        app:axisTextSize="20sp"
+        app:axisTextColor="#000"
+        />
+</LinearLayout>
