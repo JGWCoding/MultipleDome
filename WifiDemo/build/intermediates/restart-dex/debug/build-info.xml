@@ -5,36 +5,36 @@
     density="xxhdpi"
     format="8"
     plugin-version="2.2.2"
-    timestamp="375382873340032"
+    timestamp="629499527484740"
     token="1010710582268725276"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="318" />
+        duration="310" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="94" />
+        duration="15" />
     <task
         name="verifier"
-        duration="17" />
+        duration="2" />
 
     <artifact
         location="C:\Users\Administrator.USER-20170308XZ\Desktop\RairDemo-master\WifiDemo\build\intermediates\transforms\dex\debug\folders\1000\5\slice_9\classes.dex"
         type="DEX" />
 
     <build
-        timestamp="361567296397214"
+        timestamp="620606601131539"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="C:\Users\Administrator.USER-20170308XZ\Desktop\RairDemo-master\WifiDemo\build\outputs\apk\WifiDemo-debug.apk"
             type="MAIN" />
     </build>
     <build
-        timestamp="375382873340032"
+        timestamp="629499527484740"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="C:\Users\Administrator.USER-20170308XZ\Desktop\RairDemo-master\WifiDemo\build\intermediates\transforms\dex\debug\folders\1000\5\slice_9\classes.dex"

