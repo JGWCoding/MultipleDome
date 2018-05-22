@@ -31,8 +31,8 @@ public class PictureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture);
-        ImageView ivPicture = findViewById(R.id.iv_picture);
-        tvResult = findViewById(R.id.tv_result);
+        ImageView ivPicture = (ImageView) findViewById(R.id.iv_picture);
+        tvResult = (TextView) findViewById(R.id.tv_result);
         tvResult.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         String picturePath = getIntent().getStringExtra(Constants.PATH_KEY);

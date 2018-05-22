@@ -12,12 +12,12 @@
         "source": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_action_mode_close_item_material.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\res\\merged\\debug\\layout\\list_item.xml",
-        "source": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\src\\main\\res\\layout\\list_item.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\res\\merged\\debug\\layout\\abc_expanded_menu_layout.xml",
         "source": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\res\\merged\\debug\\layout\\list_item.xml",
+        "source": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\src\\main\\res\\layout\\list_item.xml"
     },
     {
         "merged": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action_tombstone.xml",
@@ -44,12 +44,12 @@
         "source": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
-        "source": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_screen_simple.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
         "source": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_popup_menu_header_item_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
+        "source": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_screen_simple.xml"
     },
     {
         "merged": "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",

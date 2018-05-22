@@ -1,1 +1,2 @@
-include ':EncrptDemo', ':screencapturedemo', 'WifiDemo', 'BluetoothDemo', 'WebViewDemo', 'CustomViewDemo';
+include ':EncrptDemo', ':screencapturedemo', 'WifiDemo', 'BluetoothDemo','PreferenceActivityDemo',
+'WebViewDemo', 'CustomViewDemo','ConnectivityManagerDemo','FaceDetectDemo';

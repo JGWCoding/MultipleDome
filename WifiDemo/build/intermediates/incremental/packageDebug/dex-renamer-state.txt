@@ -1,7 +1,0 @@
-#Mon May 21 14:03:48 CST 2018
-base.0=C\:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_20d7514a4f2c010510ee1894fc05b0878da8228a
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=C\:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_ffc4661f3bef303b81aea89b7d9270f28449b449\\classes.dex
-base.1=C\:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_ffc4661f3bef303b81aea89b7d9270f28449b449
-file.0=C\:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_20d7514a4f2c010510ee1894fc05b0878da8228a\\classes.dex

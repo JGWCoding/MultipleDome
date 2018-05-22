@@ -12,11 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import com.rairmmd.facedetect.constant.Constants;
 import com.rairmmd.facedetect.utils.DateUtils;
 import com.rairmmd.facedetect.view.DrawFaceView;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        surfaceView = findViewById(R.id.surfaceView);
-        faceView = findViewById(R.id.faceView);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+        faceView = (DrawFaceView) findViewById(R.id.faceView);
         openSurfaceView();
     }
 

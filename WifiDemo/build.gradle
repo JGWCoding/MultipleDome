@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-
+//这里是要输入的路径
+def outputPathName = "C:\\Users\\Administrator.USER-20170308XZ\\Desktop\\RairDemo-master\\WifiDemo\\apk"
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -17,6 +18,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(outputPathName+"/${variant.buildType.name}","wifiDemo.apk");
+//            output.outputFile = new File(
+            //${variant.buildType.name} (debug,release) ${variant.versionName}(versionName)
+//                    output.outputFile.parent + "/${variant.buildType.name}",
+//                    "osc-android-${variant.versionName}-${variant.buildType.name}.apk".toLowerCase())
         }
     }
 }
