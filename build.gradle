@@ -6,16 +6,33 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
-
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.3.0'   //方法数查看工具dex_count
+        //执行./gradlew assembleDebug命令后，在<app>\build\outputs\dexcount路径下会有各个productFlavors文件夹，
+        //文件夹下的index.html打开即可见详情。
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://maven.google.com" }
+        maven {
+            url 'https://dl.bintray.com/oschinaapp/maven/'
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    compileSdkVersion = 24
+    buildToolsVersion = "24.0.3"
+    applicationId = "ziweiyang.toppine.com.oschinadome"
+    minSdkVersion = 19
+    targetSdkVersion = 24
+    versionCode = 288
+    versionName = "v2.8.8(1708301525)"
+    supportVersion = '25.1.0'
 }
