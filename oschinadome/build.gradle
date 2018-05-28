@@ -100,7 +100,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"   //recyclerview引用
     compile "com.android.support:cardview-v7:$rootProject.ext.supportVersion"   //cardview的引用
     compile fileTree(include: ['*.jar'], dir: 'libs')   //包含libs下的jar包进行引用
-//    compile project(':open')      //open项目的引用
+    compile project(':open')      //open项目的引用 --- 引用了arr包
     if (propertyHaveDebugCompile) {     //debug版本使用这个 --这个debug也为false
         compile propertyDebugCompile
     }

@@ -7,7 +7,7 @@ import android.support.v4.content.SharedPreferencesCompat;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import ziweiyang.toppine.com.oschinadome.utils.ToastUtil;
+import ziweiyang.toppine.com.oschinadome.utils.SimplexToast;
 
 /**
  * Created by Administrator on 2018/5/23.
@@ -117,6 +117,6 @@ public class BaseApplication extends Application {
     public static void showToast(String message, int duration, int icon, int gravity) {
         Context context = _context;
         if (context != null)
-            ToastUtil.show(context, message, gravity, duration);
+            SimplexToast.show(context, message, gravity, duration);
     }
 }

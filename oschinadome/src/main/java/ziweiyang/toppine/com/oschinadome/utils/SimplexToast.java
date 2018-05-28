@@ -6,13 +6,13 @@ import android.widget.Toast;
 
 import ziweiyang.toppine.com.oschinadome.utils.thread.ThreadProxy;
 
-public class ToastUtil {
+public class SimplexToast {
 
     private static Toast mToast;
     private static long nextTimeMillis;
     private static int yOffset;
 
-    private ToastUtil(Context context) {
+    private SimplexToast(Context context) {
     }
 
     public static Toast init(Context context) {

@@ -1,2 +1,2 @@
 include ':EncrptDemo', ':screencapturedemo', ':oschinadome', 'WifiDemo', 'BluetoothDemo', 'PreferenceActivityDemo',
-        'WebViewDemo', 'CustomViewDemo', 'FaceDetectDemo';
+        'WebViewDemo', 'CustomViewDemo', 'FaceDetectDemo', ':open';

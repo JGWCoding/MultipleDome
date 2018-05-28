@@ -1,7 +1,11 @@
 package ziweiyang.toppine.com.oschinadome;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import net.oschina.common.helper.ReadStateHelper;
 
+import ziweiyang.toppine.com.oschinadome.net.ApiHttpClient;
+import ziweiyang.toppine.com.oschinadome.utils.AccountHelper;
 import ziweiyang.toppine.com.oschinadome.utils.cache.DetailCache;
 import ziweiyang.toppine.com.oschinadome.utils.db.DBManager;
 
@@ -28,12 +32,12 @@ public class OSCApplication extends AppContext {
     private void init() {
         // 初始化异常捕获类
         AppCrashHandler.getInstance().init(this);
-        // 初始化账户基础信息
+        // 初始化账户基础信息    --- User的SharedPreferences是否有账户信息
         AccountHelper.init(this);
         // 初始化网络请求
         ApiHttpClient.init(this);
         //初始化百度地图
-        SDKInitializer.initialize(this);
+        SDKInitializer.initialize(this);    //
         DBManager.init(this); //数据库
     }
 
