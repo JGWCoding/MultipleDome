@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ziweiyang.toppine.com.oschinadome.ui.view.RecyclerRefreshLayout
+        android:id="@+id/layout_recycler_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </ziweiyang.toppine.com.oschinadome.ui.view.RecyclerRefreshLayout>
+
+    <ziweiyang.toppine.com.oschinadome.ui.view.EmptyLayout
+        android:id="@+id/lay_emptyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>
+

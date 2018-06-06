@@ -18,7 +18,7 @@ import ziweiyang.toppine.com.oschinadome.R;
 
 
 /**
- *
+ *  Recyclerview封装的adapter,可控制头部(自己控制)和脚部视图(固定)
  */
 @SuppressWarnings("unused")
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
@@ -105,7 +105,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
                 if (onLoadingHeaderCallBack != null)
                     return onLoadingHeaderCallBack.onCreateHeaderHolder(parent);    //显示headerView(需要你写headerView)
                 else
-                    throw new IllegalArgumentException("you have to impl the interface when using this viewType");
+                    throw new IllegalArgumentException("you have to impl the interfaces when using this viewType");
             case VIEW_TYPE_FOOTER:  //显示footerView (footer视图已固定,不需要你写)
                 return new FooterViewHolder(mInflater.inflate(R.layout.recycler_footer_view, parent, false));
             default:    //itemView

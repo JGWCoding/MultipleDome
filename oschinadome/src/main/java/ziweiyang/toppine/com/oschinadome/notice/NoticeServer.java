@@ -22,12 +22,12 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import java.lang.reflect.Type;
 
 import cz.msebera.android.httpclient.Header;
-import ziweiyang.toppine.com.oschinadome.MainActivity;
 import ziweiyang.toppine.com.oschinadome.OSCApplication;
 import ziweiyang.toppine.com.oschinadome.R;
 import ziweiyang.toppine.com.oschinadome.bean.ResultBean;
 import ziweiyang.toppine.com.oschinadome.net.OSChinaApi;
 import ziweiyang.toppine.com.oschinadome.receiver.ListenAccountChangeReceiver;
+import ziweiyang.toppine.com.oschinadome.ui.activity.MainActivity;
 import ziweiyang.toppine.com.oschinadome.utils.TLog;
 
 /**

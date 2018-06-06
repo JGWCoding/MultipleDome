@@ -6,6 +6,7 @@ import android.support.v4.content.SharedPreferencesCompat;
 import android.text.TextUtils;
 
 import ziweiyang.toppine.com.oschinadome.utils.TDevice;
+import ziweiyang.toppine.com.oschinadome.utils.TLog;
 
 /**
  * @author qiujuer Email:qiujuer@live.cn
@@ -28,6 +29,7 @@ public final class Setting {    //SharedPreferences文件配置
     public static boolean checkIsNewVersion(Context context) {
         int saveVersionCode = getSaveVersionCode(context);  //得到SharedPreference存储的版本
         int currentVersionCode = TDevice.getVersionCode(); //手机当前的版本
+        TLog.e("saveVersionCode:"+saveVersionCode+" currentVersionCode:"+currentVersionCode);
         if (saveVersionCode < currentVersionCode) {
             updateSaveVersionCode(context, currentVersionCode);
             return true;

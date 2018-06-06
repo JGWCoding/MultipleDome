@@ -15,7 +15,7 @@ import java.io.Serializable;
 public abstract class Base implements Serializable {
 
     @XStreamAlias("notice")
-    protected Notice notice;
+    protected Notice notice;    //通知
 
     public Notice getNotice() {
         return notice;

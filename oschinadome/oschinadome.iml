@@ -43,13 +43,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/oschinaDebug/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/oschinaDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/oschinaDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/oschina/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/oschina/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/oschina/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/oschina/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/oschina/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/oschina/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/oschina/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOschinaDebug/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOschinaDebug/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOschinaDebug/assets" type="java-test-resource" />
@@ -58,6 +51,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testOschinaDebug/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOschinaDebug/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOschinaDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/oschina/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/oschina/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/oschina/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/oschina/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/oschina/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/oschina/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/oschina/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/oschina/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/oschina/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/oschina/assets" type="java-resource" />

@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import ziweiyang.toppine.com.oschinadome.MainActivity;
 import ziweiyang.toppine.com.oschinadome.R;
 
 
