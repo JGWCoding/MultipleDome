@@ -81,6 +81,12 @@
         tools:replace="android:allowBackup"
         android:theme="@style/App.Theme.Light">
         <!--tools:replace="android:allowBackup" 因为依赖的库文件设置了android:allowBackup(备份)="false"-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="53cb520c56240bbd7d076ce5" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL}" />
 
         <activity android:name=".ui.activity.LaunchActivity"
             android:label="@string/app_name"
@@ -91,7 +97,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.activity.MainActivity"
+            android:label="开源中国"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/App.Theme.Main"/>
+
+        <activity android:name=".ui.activity.ErrorActivity"
+            android:exported="false"
+            android:label="错误信息"
+            android:launchMode="singleTask"
+            android:process=":crashInfo"
+            android:screenOrientation="portrait"/>
+
+
         <service android:name=".service.DownloadService" />
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="ziweiyang.toppine.com.oschinadome.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

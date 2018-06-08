@@ -7,8 +7,7 @@
         android:id="@+id/activity_main_ui"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="net.oschina.app.improve.main.MainActivity">
+        android:orientation="vertical">
         <!--中间替换的containerFragment  头部tab也是这个Fragment里-->
         <FrameLayout
             android:id="@+id/main_container"
@@ -18,12 +17,12 @@
         <!--这是底部导航栏Fragment-->
         <fragment
             android:id="@+id/fag_nav"
-            android:name="net.oschina.app.improve.main.nav.NavFragment"
+            android:name="ziweiyang.toppine.com.oschinadome.ui.fragment.NavFragment"
             android:layout_width="match_parent"
             android:layout_height="48dp" />
     </LinearLayout>
     <!--用户进来第一次 进行图片提示用户操作-->
-    <net.oschina.app.improve.widget.RippleIntroView
+    <ziweiyang.toppine.com.oschinadome.ui.view.RippleIntroView
         android:id="@+id/layout_ripple"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -55,7 +54,7 @@
             android:src="@mipmap/tips_subscribe"
             tools:ignore="RtlHardcoded" />
 
-    </net.oschina.app.improve.widget.RippleIntroView>
+    </ziweiyang.toppine.com.oschinadome.ui.view.RippleIntroView>
 
 </FrameLayout>
 

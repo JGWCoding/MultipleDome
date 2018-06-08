@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 
@@ -39,11 +38,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             finish();   //销毁自身  -- 不走
         }
 
-        //umeng analytics ---> 友盟统计
-        MobclickAgent.setDebugMode(false);
-        MobclickAgent.openActivityDurationTrack(false); //跟踪Activity的统计信息
-        //设置方案为normal
-        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        //umeng analytics ---> 友盟统计 //todo 友盟统计注释掉
+//        MobclickAgent.setDebugMode(false);
+//        MobclickAgent.openActivityDurationTrack(false); //跟踪Activity的统计信息
+//        //设置方案为normal
+//        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
     //控制Fragment显示和隐藏
     protected void addFragment(int frameLayoutId,Fragment fragment) {
@@ -78,15 +77,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart(this.mPackageNameUmeng);
-        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart(this.mPackageNameUmeng);
+//        MobclickAgent.onResume(this);
     }
     //MobclickAgent统计页面
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(this.mPackageNameUmeng);
-        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd(this.mPackageNameUmeng);
+//        MobclickAgent.onPause(this);
     }
 
     protected abstract int getContentView();

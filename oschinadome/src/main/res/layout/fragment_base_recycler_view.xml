@@ -89,7 +89,7 @@
         </LinearLayout>
     </ziweiyang.toppine.com.oschinadome.ui.view.RecyclerRefreshLayout>
 
-    <net.oschina.app.ui.empty.EmptyLayout
+    <ziweiyang.toppine.com.oschinadome.ui.view.EmptyLayout
         android:id="@+id/error_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

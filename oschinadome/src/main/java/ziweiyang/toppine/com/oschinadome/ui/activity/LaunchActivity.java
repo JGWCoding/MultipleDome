@@ -10,6 +10,7 @@ import ziweiyang.toppine.com.oschinadome.bean.User;
 import ziweiyang.toppine.com.oschinadome.other.AppOperator;
 import ziweiyang.toppine.com.oschinadome.ui.fragment.DynamicTabFragment;
 import ziweiyang.toppine.com.oschinadome.utils.AccountHelper;
+import ziweiyang.toppine.com.oschinadome.utils.TLog;
 
 /**
  * 应用启动界面  --> 背景是Theme主题里配置好了的
@@ -43,11 +44,12 @@ public class LaunchActivity extends BaseActivity {
                 User user = AccountHelper.getUser();
                 user.setCookie(cookie);
                 AccountHelper.updateUserCache(user);    //更新账户信息 添加cookie
+                TLog.e("");
                 OSCApplication.reInit();    //账户重新加载
             }
         }
-
-        // 栏目(增减)Manager初始化
+        TLog.e("");
+        // 栏目(增减)Manager初始化 --- 把tab的信息从asset文件里读取出来(json文件),转换成bean
         DynamicTabFragment.initTabPickerManager();
 
         // Delay...
@@ -63,6 +65,7 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void redirectTo() {
+        TLog.e("LaunchActivity跳转到MainActivity");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

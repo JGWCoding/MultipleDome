@@ -14,7 +14,7 @@ android {
         versionName rootProject.ext.versionName
         //设置常量  API_SERVER_URL
         buildConfigField("String", "API_SERVER_URL", '"https://www.oschina.net/;http://www.oschina.cc/"')
-        buildConfigField("String", "VIOLET_PASSCODE", '"violet_passcode"')
+        buildConfigField("String", "VIOLET_PASSCODE", '" "')
     }
     // rename the apk with the version name
     applicationVariants.all { variant ->

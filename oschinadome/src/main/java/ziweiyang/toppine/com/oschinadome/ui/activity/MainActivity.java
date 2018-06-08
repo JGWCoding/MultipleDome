@@ -104,10 +104,10 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
     protected void initWidget() {
         super.initWidget();
         FragmentManager manager = getSupportFragmentManager();
-        mNavBar = ((NavFragment) manager.findFragmentById(R.id.fag_nav));
-        mNavBar.setup(this, manager, R.id.main_container, this); //选择综合这个页面
+        mNavBar = ((NavFragment) manager.findFragmentById(R.id.fag_nav));//NavFragment负责下面tab点击界面
+        mNavBar.setup(this, manager, R.id.main_container, this); //一开始选择综合这个页面
 
-        if (AppContext.get("isFirstComing", true)) {
+        if (AppContext.get("isFirstComing", true)) {//用户第一次进来,提示用户进行订阅频道RippleIntroView
             View view = findViewById(R.id.layout_ripple);
             view.setVisibility(View.VISIBLE);
             view.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +118,7 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
                 }
             });
         }
+
     }
 
     @Override
@@ -131,11 +132,11 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
         super.onPostCreate(savedInstanceState);
         try {
             //如果是两天前的数据，则全部上传  没登录就不上传了
-            if (!AccountHelper.isLogin())
+            if (!AccountHelper.isLogin())   //是否有id和cookie
                 return;
             String updateTime = AppConfig.getAppConfig(this).get("upload_behavior_time");
             if (DBManager.getInstance().getCount(Behavior.class) >= 15 &&
-                    !TextUtils.isEmpty(updateTime) &&
+                    !TextUtils.isEmpty(updateTime) &&   //大于48小时
                     (System.currentTimeMillis() - StringUtils.toDate(updateTime).getTime() >= 172800000)) {
                 final List<Behavior> behaviors = DBManager.getInstance()
                         .get(Behavior.class);
@@ -173,7 +174,7 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
         doNewIntent(intent, false);
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") //是否来通知了,转到我的页面
     private void doNewIntent(Intent intent, boolean isCreate) {
         if (intent == null || intent.getAction() == null)
             return;

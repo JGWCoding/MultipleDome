@@ -1,7 +1,5 @@
 package ziweiyang.toppine.com.oschinadome;
 
-import com.baidu.mapapi.SDKInitializer;
-
 import net.oschina.common.helper.ReadStateHelper;
 
 import ziweiyang.toppine.com.oschinadome.net.ApiHttpClient;
@@ -37,7 +35,7 @@ public class OSCApplication extends AppContext {
         // 初始化网络请求
         ApiHttpClient.init(this);
         //初始化百度地图
-        SDKInitializer.initialize(this);    //
+//        SDKInitializer.initialize(this);    //TODO 注释
         DBManager.init(this); //数据库
     }
 

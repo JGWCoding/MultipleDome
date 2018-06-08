@@ -5,6 +5,7 @@ import android.os.Looper;
 import android.widget.Toast;
 
 import ziweiyang.toppine.com.oschinadome.ui.activity.ErrorActivity;
+import ziweiyang.toppine.com.oschinadome.utils.TLog;
 
 
 /**
@@ -38,6 +39,7 @@ public class AppCrashHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
+        TLog.e("Thread:"+thread.getName()+" Throwable:"+ex.getMessage());
         ErrorActivity.show(mContext, ex.getMessage());
         if (mDefaultHandler != null && (BuildConfig.DEBUG || (!handleException(ex)))) {
             mDefaultHandler.uncaughtException(thread, ex);

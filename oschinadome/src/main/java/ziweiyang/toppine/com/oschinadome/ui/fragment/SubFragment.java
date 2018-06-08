@@ -22,7 +22,8 @@ import ziweiyang.toppine.com.oschinadome.ui.view.NewsHeaderView;
 import ziweiyang.toppine.com.oschinadome.utils.TDevice;
 
 /**
- * 每日乱弹 界面
+ * 每日乱弹 界面 (RecyclerView界面)
+ *
  *
  */
 
