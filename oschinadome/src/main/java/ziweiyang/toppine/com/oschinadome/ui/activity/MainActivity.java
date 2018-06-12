@@ -69,8 +69,11 @@ import ziweiyang.toppine.com.oschinadome.utils.db.DBManager;
 import static ziweiyang.toppine.com.oschinadome.ui.activity.NearbyActivity.LOCATION_PERMISSION;
 
 /**
- * 主页面 内容绑定-->{@link NavFragment (initWidget里面进行了绑定)
+ * 主页面 内容绑定-->{@link NavFragment (initWidget里面进行了绑定) 显示下面tab和 main_container 绑定视图
  * 实现一个navigation的onReselect重选监听 ,permission的请求回调,更新监听
+ *  {@link #checkUpdate 是否有更新apk}
+ *  {@link #initData() }
+ *  {@link #toggleNavTabView(boolean) 开关 下面tab的平移隐藏动画}
  */
 public class MainActivity extends BaseActivity implements NavFragment.OnNavigationReselectListener,
         EasyPermissions.PermissionCallbacks, CheckUpdateManager.RequestPermissions {
@@ -124,10 +127,10 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); //运行getContentView() initWidget()  initData()
-        doNewIntent(getIntent(), true);     //根据传过来的数据进行一个反应
+        doNewIntent(getIntent(), true);     //根据传过来的数据是否有通知进行跳转到我的页面
     }
 
-    @Override   //布局完成之后运行之后
+    @Override   //布局完成之后运行之后  --- 在 onStart之后运行 -- 上传用户在APP上行为数据(设备,看的文章,是否赞,喜欢)
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         try {
@@ -149,13 +152,12 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, String responseString) {
                         try {
-                            Type type = new TypeToken<ResultBean<String>>() {
-                            }.getType();
+                            Type type = new TypeToken<ResultBean<String>>() {}.getType();
                             ResultBean<String> bean = new Gson().fromJson(responseString, type);
                             if (bean.isSuccess()) {
                                 //清楚数据，避免清空没有上传的数据
                                 DBManager.getInstance()
-                                        .delete(Behavior.class,"id<=?", String.valueOf(behaviors.get(behaviors.size() - 1).getId()));
+                                        .delete(Behavior.class, "id<=?", String.valueOf(behaviors.get(behaviors.size() - 1).getId()));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -203,8 +205,8 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
         NoticeManager.init(this); //通知
         // in this we can checkShare update
         checkUpdate();      //检查 更新 -->弹出更新窗口
-        checkLocation();    //位置
-        TweetNotificationManager.setup(this);   //消息管理 --> 有消息来进行展示
+//        checkLocation();    //位置权限是否开启
+        TweetNotificationManager.setup(this);   //消息管理 --> 对用户发送的动弹进行管理 (成功或失败等) (有消息显示红点)
     }
 
     private void checkLocation() {
@@ -294,7 +296,7 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        NoticeManager.stopListen(this);
+        NoticeManager.stopListen(this);     //注销广播
         releaseLbs();
     }
 
@@ -302,7 +304,7 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
         this.mTurnBackListeners.add(l);
     }
 
-    public void toggleNavTabView(boolean isShowOrHide) {
+    public void toggleNavTabView(boolean isShowOrHide) {    //添加栏目动画开关
         final View view = mNavBar.getView();
         if (view == null) return;
         // hide
@@ -338,14 +340,14 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {   //是否有返回键
         for (TurnBackListener l : mTurnBackListeners) {
             if (l.onTurnBack()) return;
         }
         boolean isDoubleClick = BaseApplication.get(AppConfig.KEY_DOUBLE_CLICK_EXIT, true);
         if (isDoubleClick) {
             long curTime = SystemClock.uptimeMillis();
-            if ((curTime - mBackPressedTime) < (3 * 1000)) {
+            if ((curTime - mBackPressedTime) < (3 * 1000)) {    //3秒内双击进行退出
                 finish();
             } else {
                 mBackPressedTime = curTime;

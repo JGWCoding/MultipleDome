@@ -19,8 +19,7 @@ import ziweiyang.toppine.com.oschinadome.ui.activity.UpdateActivity;
 import ziweiyang.toppine.com.oschinadome.ui.dialog.DialogHelper;
 
 /**
- * Created by haibin
- * on 2016/10/19.
+ * 更新管理分装
  */
 public class CheckUpdateManager {
 
@@ -70,7 +69,7 @@ public class CheckUpdateManager {
                             int curVersionCode = TDevice.getVersionCode(AppContext
                                     .getInstance().getPackageName());
                             if (curVersionCode < Integer.parseInt(version.getCode())) {
-                                UpdateActivity.show((Activity) mContext, version);
+                                UpdateActivity.show((Activity) mContext, version);//显示更新界面
 //                                AlertDialog.Builder dialog = DialogHelper.getConfirmDialog(mContext, version.getMessage(), new DialogInterface.OnClickListener() {
 //                                    @Override
 //                                    public void onClick(DialogInterface dialogInterface, int i) {

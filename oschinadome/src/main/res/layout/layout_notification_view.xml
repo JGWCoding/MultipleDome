@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/gray"
     android:padding="10dp">
 
     <ImageView
@@ -29,7 +30,8 @@
         android:layout_below="@id/tv_download_progress"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/iv_image"
+        android:progressDrawable="@drawable/progress_bar_layer_list"
         android:max="100"
-        android:progress="0" />
+        android:progress="1" />
 
 </RelativeLayout>

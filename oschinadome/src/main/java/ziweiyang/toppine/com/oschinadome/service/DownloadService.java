@@ -28,9 +28,8 @@ import ziweiyang.toppine.com.oschinadome.R;
 import ziweiyang.toppine.com.oschinadome.ui.activity.MainActivity;
 
 /**
- * 下载服务
- * Created by haibin
- * on 2016/10/19.
+ * 下载服务(没有支持断点下载和判断有没有下载好了新版本)
+ *  自定义下载通知(每下4%进行更新progress)
  */
 @SuppressWarnings("all")
 public class DownloadService extends Service {
@@ -88,7 +87,7 @@ public class DownloadService extends Service {
     public void onCreate() {
         super.onCreate();
         isDownload = true;
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); //通知管理
     }
 
     @Override
@@ -102,7 +101,7 @@ public class DownloadService extends Service {
         setUpNotification();
         new Thread() {
             @Override
-            public void run() {
+            public void run() { //可以进行线程池管理而不是新开线程
                 try {
                     downloadUpdateFile(mUrl, apkFile);
                 } catch (Exception e) {
@@ -129,7 +128,7 @@ public class DownloadService extends Service {
             httpConnection.setConnectTimeout(10000);
             httpConnection.setReadTimeout(20000);
             updateTotalSize = httpConnection.getContentLength();
-            if (httpConnection.getResponseCode() == 404) {
+            if (httpConnection.getResponseCode() == 404) {//404不该抛异常
                 throw new Exception("fail!");
             }
             is = httpConnection.getInputStream();
@@ -170,7 +169,7 @@ public class DownloadService extends Service {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(getApplicationContext(), "net.oschina.app.provider", file);
+            Uri contentUri = FileProvider.getUriForFile(getApplicationContext(), "ziweiyang.toppine.com.oschinadome.provider", file);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
         } else {
             intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
@@ -190,6 +189,8 @@ public class DownloadService extends Service {
         RemoteViews contentView = new RemoteViews(getPackageName(),
                 R.layout.layout_notification_view);
         contentView.setTextViewText(R.id.tv_download_progress, mTitle);
+        //RemoteViews
+        contentView.setTextColor(R.id.tv_download_progress,R.color.black);
         mNotification.contentView = contentView;
 
         Intent intent = new Intent(this, MainActivity.class);

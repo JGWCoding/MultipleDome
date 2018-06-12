@@ -4,12 +4,12 @@
     package="ziweiyang.toppine.com.oschinadome">
     <!--自定义android 7.0自动更新下载完成弹窗安装申请意图的action的权限，危险级别为签名级别，即官方签名apk才能使用该权限-->
     <permission
-        android:name="net.oschina.app.ACCESS_UPDATE_RESULT"
+        android:name="ziweiyang.toppine.com.oschinadome.ACCESS_UPDATE_RESULT"
         android:protectionLevel="signature" />
 
     <!--百度地图lbs雷达功能请求权限-->
 
-    <!--该权限允许使用ActivityManager访问当前运行的任务栈-->
+    <!--该权限允许使用ActivityManager访问当前运行的任务栈   可以获取已安装应用列表? -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <!--该权限允许使用PowerManager WakeLocks防止处理器休眠或屏幕变暗，比如百度地图在定位时会用到-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -110,6 +110,13 @@
             android:launchMode="singleTask"
             android:process=":crashInfo"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.activity.UpdateActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="在线更新"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Dialog.NoTitle.Translucent" />
 
 
         <service android:name=".service.DownloadService" />

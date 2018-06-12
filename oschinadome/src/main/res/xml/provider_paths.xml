@@ -2,7 +2,7 @@
 <paths>
     <external-path
         name="files_root"
-        path="Android/data/net.oschina.app/" />
+        path="Android/data/ziweiyang.toppine.com.oschinadome/" />
     <external-path
         name="external_storage_root"
         path="." />

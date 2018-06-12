@@ -6,16 +6,16 @@
         <item name="android:windowIsTranslucent">false</item>
     </style>
 
-    <!--<style name="Theme.Dialog.NoTitle.Translucent" parent="Theme.AppCompat.Light.Dialog">-->
-        <!--<item name="android:windowFrame">@null</item>&lt;!&ndash; 边框 &ndash;&gt;-->
-        <!--<item name="android:windowIsFloating">true</item>&lt;!&ndash; 是否浮现在activity之上 &ndash;&gt;-->
-        <!--<item name="android:windowIsTranslucent">true</item>&lt;!&ndash; 半透明 &ndash;&gt;-->
-        <!--<item name="android:windowTranslucentStatus">true</item>-->
-        <!--<item name="windowNoTitle">true</item>&lt;!&ndash; 无标题 &ndash;&gt;-->
-        <!--<item name="android:windowBackground">@android:color/transparent</item>&lt;!&ndash; 背景透明 &ndash;&gt;-->
-        <!--<item name="android:backgroundDimEnabled">true</item>&lt;!&ndash; 模糊 &ndash;&gt;-->
-        <!--<item name="windowActionBar">false</item>-->
-    <!--</style>-->
+    <style name="Theme.Dialog.NoTitle.Translucent" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowFrame">@null</item><!-- 边框 -->
+        <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item><!-- 半透明 -->
+        <item name="android:windowTranslucentStatus">true</item><!-- 状态栏半透明 -->
+        <item name="windowNoTitle">true</item><!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item><!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item><!-- 模糊 -->
+        <item name="windowActionBar">false</item>
+    </style>
 
 
 

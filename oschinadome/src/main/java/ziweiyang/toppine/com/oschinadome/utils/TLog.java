@@ -9,7 +9,7 @@ import ziweiyang.toppine.com.oschinadome.BuildConfig;
 
 //这个log只会在debug模式下进行输出
 public class TLog {
-    private static final String LOG_TAG = "OSChinaLog";
+    private static final String LOG_TAG = "OSChinaLog : ";
     private static boolean DEBUG = BuildConfig.DEBUG;
 
     private TLog() {
