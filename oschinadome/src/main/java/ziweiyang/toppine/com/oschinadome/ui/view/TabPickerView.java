@@ -365,12 +365,12 @@ public class TabPickerView extends FrameLayout {
         mTabPickingListener = l;
     }
 
-    public boolean onTurnBack() {
-        if (mActiveAdapter.isEditMode()) {
+    public boolean onTurnBack() {   //回退键
+        if (mActiveAdapter.isEditMode()) {  //是否在编辑模式,是的话退出编辑模式
             mActiveAdapter.cancelEditMode();
             return true;
         }
-        if (getVisibility() == VISIBLE) {
+        if (getVisibility() == VISIBLE) {   //是否编辑栏目页面visible
             hide();
             return true;
         }
@@ -656,7 +656,7 @@ public class TabPickerView extends FrameLayout {
      *
      * @param
      */
-    public abstract static class TabPickerDataManager {
+    public abstract static class TabPickerDataManager { //Picker:拾取器
 
         public List<SubTab> mActiveDataSet;
         public List<SubTab> mInactiveDataSet;

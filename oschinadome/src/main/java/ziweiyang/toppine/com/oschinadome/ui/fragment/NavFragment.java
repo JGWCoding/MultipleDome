@@ -24,7 +24,7 @@ import ziweiyang.toppine.com.oschinadome.notice.NoticeManager;
 import ziweiyang.toppine.com.oschinadome.ui.view.NavigationButton;
 
 /**
- * 底部导航栏  NavFragment绑定四个类进行管理
+ * 底部导航栏  NavFragment绑定四个类进行管理  --- 提供底部导航栏视图
  * {@link DynamicTabFragment 综合{@link TweetViewPagerFragment 动弹 {@link  ExploreFragment 发现   {@link  UserInfoFragment 我的
  * (加号点击事件) TweetPublishActivity.show(getContext(), mRoot.findViewById(R.id.nav_item_tweet_pub));
  *  NoticeManager 通知管理
@@ -203,7 +203,7 @@ public class NavFragment extends BaseFragment implements View.OnClickListener, N
         mNavMe.showRedDot(bean.getAllCount());
     }
 
-    public interface OnNavigationReselectListener {
+    public interface OnNavigationReselectListener {     //下面导航tab重新选择
         void onReselect(NavigationButton navigationButton);
     }
 

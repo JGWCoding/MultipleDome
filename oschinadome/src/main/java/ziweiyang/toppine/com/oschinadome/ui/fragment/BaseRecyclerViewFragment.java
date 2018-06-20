@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,9 +70,9 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
         mAdapter.setState(BaseRecyclerAdapter.STATE_HIDE, false);   //设置刷新状态 设置不去刷新RecyclerView
         mRecyclerView.setAdapter(mAdapter);     //准备填充这个内容进去  -->奇怪的是Adapter没有执行    onCreateViewHolder
         mAdapter.setOnItemClickListener(this);  //设置item点击事件
-        mErrorLayout.setOnLayoutClickListener(this);
-        mRefreshLayout.setSuperRefreshLayoutListener(this);
-        mAdapter.setState(BaseRecyclerAdapter.STATE_HIDE, false);
+        mErrorLayout.setOnLayoutClickListener(this);    //设置错误页面点击事件
+        mRefreshLayout.setSuperRefreshLayoutListener(this); //设置刷新监听
+        mAdapter.setState(BaseRecyclerAdapter.STATE_HIDE, false);   //设置页面状态 -- 隐藏
         mRecyclerView.setLayoutManager(getLayoutManager()); //设置线性布局
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() { //滑动监听
             @Override
@@ -87,7 +89,7 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
                 R.color.swiperefresh_color3, R.color.swiperefresh_color4);  //设置刷新的颜色
 
 
-        mHandler = new TextHttpResponseHandler() {  //用来处理网络请求
+        mHandler = new TextHttpResponseHandler() {  //用来处理网络请求的Handler
             @Override
             public void onStart() {
                 super.onStart();
@@ -104,18 +106,34 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 log("HttpResponseHandler:onSuccess responseString:" + responseString);
                 try {
-                    ResultBean<PageBean<T>> resultBean = AppOperator.createGson().fromJson(responseString, getType()); //解析并封装数据
+                    int code = new JSONObject(responseString).getInt("code");
+                    TLog.e("message:"+new JSONObject(responseString).getString("message"));
+                    if (code ==155) {
+                        onFailure(statusCode, headers, responseString, new Exception("该版本不受支持"));
+                        return;
+                    }
+                    ResultBean<PageBean<T>> resultBean = AppOperator.createGson().fromJson(responseString,getType()); //解析并封装数据
                     if (resultBean != null && resultBean.isSuccess() && resultBean.getResult().getItems() != null) {
                         setListData(resultBean);
                         onRequestSuccess(resultBean.getCode());
+                        TLog.e("message:有数据"+responseString);
                     } else {
                         if (resultBean.getCode() == ResultBean.RESULT_TOKEN_ERROR) {
                             SimplexToast.show(getActivity(), resultBean.getMessage());
                         }   //设置状态
                         mAdapter.setState(BaseRecyclerAdapter.STATE_NO_MORE, true);
+                        TLog.e("message:数据不是需要的");
+                        if (mBean==null||mBean.getItems()==null||mBean.getItems().size()==0){
+                            mErrorLayout.setNoDataContent(new JSONObject(responseString).getString("message"));
+                            mErrorLayout.setErrorType(isNeedEmptyView()?EmptyLayout.NODATA:EmptyLayout.HIDE_LAYOUT);
+                        }else {
+                            mErrorLayout.setNoDataContent("");
+                        }
                     }
+
                 } catch (Exception e) {
                     e.printStackTrace();
+                    log(e.getMessage());
                     onFailure(statusCode, headers, responseString, e);
                 }
             }
@@ -190,12 +208,14 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
     public void onRefreshing() {
         isRefreshing = true;
         mAdapter.setState(BaseRecyclerAdapter.STATE_HIDE, true);    //隐藏正文页面,显示刷新页面, 刷新状态不用更新Recycler条目
+        TLog.e("刷新中:"+isRefreshing);
         requestData();      //在子类中请求数据 ---> 在本mHandle处理请求的数据
     }
 
     @Override
     public void onLoadMore() {
         mAdapter.setState(isRefreshing ? BaseRecyclerAdapter.STATE_HIDE : BaseRecyclerAdapter.STATE_LOADING, true);
+        TLog.e("加载更多中:"+isRefreshing);
         requestData();
     }
 
@@ -221,6 +241,7 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
     protected void onComplete() {
         mRefreshLayout.onComplete();
         isRefreshing = false;
+        TLog.e("加载完成:"+isRefreshing);
     }
 
     protected void setListData(ResultBean<PageBean<T>> resultBean) {
@@ -229,7 +250,7 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
             AppConfig.getAppConfig(getActivity()).set("system_time", resultBean.getTime()); //把上次刷新的时间记录
             mBean.setItems(resultBean.getResult().getItems());
             mAdapter.clear();
-            mAdapter.addAll(mBean.getItems());
+            mAdapter.addAll(mBean.getItems());  //添加数据
             mBean.setPrevPageToken(resultBean.getResult().getPrevPageToken());
             mRefreshLayout.setCanLoadMore(true);
             if (isNeedCache()) {
@@ -300,6 +321,6 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
     @SuppressWarnings("ConstantConditions")
     private void log(String msg) {
         if (true)
-            TLog.i(TAG, msg);
+            TLog.e(TAG, msg);
     }
 }

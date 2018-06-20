@@ -17,23 +17,15 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadProxy {
     //线程池对象
-    static ThreadPoolExecutor mExecutor;
+    public static ThreadPoolExecutor mExecutor;
 
-    private static int mCorePoolSize = 3;  //核心线程数
-    private static int mMaximumPoolSize = 5;    //最大线程数
-
-    static ThreadProxy mNormalThreadPoolProxy;
+    private static int mCorePoolSize = 5;  //核心线程数
+    private static int mMaximumPoolSize = 8;    //最大线程数
 
     public ThreadProxy(int corePoolSize, int maximumPoolSize) {
         mCorePoolSize = corePoolSize;
         mMaximumPoolSize = maximumPoolSize;
         initThreadPoolExecutor();
-    }
-
-    public static ThreadProxy getInstance() {
-        mNormalThreadPoolProxy = new ThreadProxy(5, 5);
-        initThreadPoolExecutor();
-        return mNormalThreadPoolProxy;
     }
 
     /**

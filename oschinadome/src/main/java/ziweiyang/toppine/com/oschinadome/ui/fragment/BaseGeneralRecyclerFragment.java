@@ -4,6 +4,7 @@ import ziweiyang.toppine.com.oschinadome.interfaces.OnTabReselectListener;
 
 /**
  * Fragment里填充了RecyclerView,并用EmptyLayout处理空,错误等页面,还有控制刷新页面,并处理的tab切换的基本处理
+ * 实现OnTabReselectListener是为了
  * on 2016/8/30.
  */
 public abstract class BaseGeneralRecyclerFragment<T> extends BaseRecyclerViewFragment<T> implements OnTabReselectListener {

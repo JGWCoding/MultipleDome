@@ -7,8 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import ziweiyang.toppine.com.oschinadome.bean.Tweet;
 import ziweiyang.toppine.com.oschinadome.other.gson.DoubleJsonDeserializer;
@@ -17,20 +16,23 @@ import ziweiyang.toppine.com.oschinadome.other.gson.ImageJsonDeserializer;
 import ziweiyang.toppine.com.oschinadome.other.gson.IntegerJsonDeserializer;
 import ziweiyang.toppine.com.oschinadome.other.gson.StringJsonDeserializer;
 import ziweiyang.toppine.com.oschinadome.utils.AccountHelper;
+import ziweiyang.toppine.com.oschinadome.utils.thread.ThreadProxy;
 
 /**
  * Created by JuQiu
  * on 16/6/24.
  */
 public final class AppOperator {
-    private static ExecutorService EXECUTORS_INSTANCE;      //线程池 --> 6个线程
+    private static ThreadPoolExecutor EXECUTORS_INSTANCE;      //线程池
     private static Gson GSON_INSTANCE;
 
     public static Executor getExecutor() {
         if (EXECUTORS_INSTANCE == null) {
             synchronized (AppOperator.class) {
                 if (EXECUTORS_INSTANCE == null) {
-                    EXECUTORS_INSTANCE = Executors.newFixedThreadPool(6);
+//                    EXECUTORS_INSTANCE = Executors.newFixedThreadPool(6); //创建有6个固定线程的线程池,任务多会缓存
+                    ThreadProxy.initThreadPoolExecutor();
+                    EXECUTORS_INSTANCE = ThreadProxy.mExecutor;//有核心线程和最大线程数,任务如果多会创建到最大线程并缓存任务
                 }
             }
         }

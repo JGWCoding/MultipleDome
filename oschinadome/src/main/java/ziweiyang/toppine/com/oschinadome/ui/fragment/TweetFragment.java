@@ -52,9 +52,9 @@ import ziweiyang.toppine.com.oschinadome.utils.TDevice;
 import ziweiyang.toppine.com.oschinadome.utils.cache.CacheManager;
 
 
-/** 动弹 -> 最新.热门.我的 动弹页面
+/** 动弹 -> 最新.热门.我的 动弹 页面
  * 填充 ---> 动弹列表 -->上面的tab已处理
- * 自己处理了点击事件,长按事件等
+ * 自己处理了点击事件,长按事件,动弹管理等
  */
 public class TweetFragment extends BaseGeneralRecyclerFragment<Tweet>
         implements BaseRecyclerAdapter.OnItemLongClickListener, TweetNotificationManager.TweetPubNotify {

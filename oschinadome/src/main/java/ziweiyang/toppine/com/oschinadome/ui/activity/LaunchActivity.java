@@ -49,9 +49,13 @@ public class LaunchActivity extends BaseActivity {
             }
         }
         TLog.e("");
+        AppOperator.runOnThread(new Runnable() {
+            @Override
+            public void run() {
         // 栏目(增减)Manager初始化 --- 把tab的信息从asset文件里读取出来(json文件),转换成bean
-        DynamicTabFragment.initTabPickerManager();
-
+                DynamicTabFragment.initTabPickerManager();
+            }
+        });
         // Delay...
         try {
 //            Thread.sleep(800);

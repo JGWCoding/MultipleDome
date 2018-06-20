@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import ziweiyang.toppine.com.oschinadome.utils.TLog;
 
 /**
- * 我们不希望维持Fragment的状态，因为可能活动的Tab会很多，所以既不能用
+ * 我们不希望维持Fragment的状态，因为可能活动的Tab会很多，所以既不能用   -- 仿源码
  * {@link android.support.v4.app.FragmentPagerAdapter}, 因为它通过{@link FragmentTransaction#add(Fragment, String)},
  * {@link FragmentTransaction#attach(Fragment)}和{@link FragmentTransaction#detach(Fragment)}的方式，
  * 状态由{@link Fragment}自己维护，也不能用{@link android.support.v4.app.FragmentStatePagerAdapter}, 因为
@@ -32,7 +32,8 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
 
     /**
      * Return the fragment associated with a specified position
-     *  强制子类返回FragmentItem
+     * 强制子类返回FragmentItem
+     *
      * @param position the position
      * @return {@link Fragment}
      */
@@ -54,8 +55,10 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
 
         Fragment fragment = getItem(position);
         TLog.i("oschina", "Adding fragment item #" + position + ": f=" + fragment);
-        fragment.setMenuVisibility(false);
+
+        fragment.setMenuVisibility(false);  //一般FragmentPagerAdapter利用这个切换Fragment
         fragment.setUserVisibleHint(false);
+
         mCurTransaction.add(container.getId(), fragment,
                 makeFragmentName(container.getId(), getItemId(position)));
         return fragment;
@@ -74,7 +77,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {  //设置当前页面
         Fragment fragment = (Fragment) object;
         if (fragment != mCurrentPrimaryItem) {
             if (mCurrentPrimaryItem != null) {
@@ -99,6 +102,8 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
 
     public void commitUpdate() {
         if (mCurTransaction != null) {
+            //commitNow()：同步的提交这个事务。（API_24添加的）相当于commit();
+            //commitNowAllowingStateLoss()：和commitNow()一样，但是允许Activity的状态保存之后提交。（API_24添加的）
             mCurTransaction.commitNowAllowingStateLoss();
             mCurTransaction = null;
         }

@@ -40,7 +40,7 @@ import ziweiyang.toppine.com.oschinadome.utils.TDevice;
 /**
  * 动态栏目Fragment     ---> 综合页面的展示 (页面不包含底部tab) 由于没测试接口,无法获取数据
  * 页面有 mLayoutTab(上面的tab) + mViewPager(中间内容展示)-->SubFragment-->BaseRecyclerViewFragment-->EmptyLayout-->显示 测试无后台接口
- * 控制动态栏目的视图变换  ---> 改变上面tab的变换 --> onTabReselect()
+ * 控制动态栏目的视图变换  ---> 改变上面tab的变换 --> {@link #onTabReselect()
  */
 
 public class DynamicTabFragment extends BaseTitleFragment implements OnTabReselectListener {
@@ -70,21 +70,22 @@ public class DynamicTabFragment extends BaseTitleFragment implements OnTabResele
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (MainActivity) context;
-        activity.addOnTurnBackListener(new MainActivity.TurnBackListener() {
+        activity.addOnTurnBackListener(new MainActivity.TurnBackListener() {    //添加回退键监听
             @Override
             public boolean onTurnBack() {
-                return mViewTabPicker != null && mViewTabPicker.onTurnBack();
+                return mViewTabPicker != null && mViewTabPicker.onTurnBack();//如果添加栏目是在显示,就隐藏
             }
         });
     }
 
-    public static TabPickerView.TabPickerDataManager initTabPickerManager() {
+    public static TabPickerView.TabPickerDataManager initTabPickerManager() { //一开始LunchActivity调用
         if (mTabPickerDataManager == null) {
             mTabPickerDataManager = new TabPickerView.TabPickerDataManager() {
                 @Override
-                public List<SubTab> setupActiveDataSet() {
+                public List<SubTab> setupActiveDataSet() { //选中的激活的栏目
                     FileReader reader = null;
                     try {
+                        //     path:/data/data/packageName/files/sub_tab_active.json
                         File file = AppContext.getInstance().getFileStreamPath("sub_tab_active.json");
                         if (!file.exists()) return null;
                         reader = new FileReader(file);
@@ -100,7 +101,7 @@ public class DynamicTabFragment extends BaseTitleFragment implements OnTabResele
                 }
 
                 @Override
-                public List<SubTab> setupOriginalDataSet() {
+                public List<SubTab> setupOriginalDataSet() {    //一开始配置基础的原件 栏目
                     InputStreamReader reader = null;
                     try {
                         reader = new InputStreamReader(
@@ -118,7 +119,7 @@ public class DynamicTabFragment extends BaseTitleFragment implements OnTabResele
                 }
 
                 @Override
-                public void restoreActiveDataSet(List<SubTab> mActiveDataSet) {
+                public void restoreActiveDataSet(List<SubTab> mActiveDataSet) { //重新存储选中的栏目
                     OutputStreamWriter writer = null;
                     try {
                         writer = new OutputStreamWriter(
@@ -316,8 +317,7 @@ public class DynamicTabFragment extends BaseTitleFragment implements OnTabResele
     }
 
     @OnClick(R.id.iv_arrow_down)
-        // + 加号的点击事件
-    void onClickArrow() {
+    void onClickArrow() { // + 加号的点击事件
         if (mViewArrowDown.getRotation() != 0) {
             mViewTabPicker.onTurnBack();
         } else {
@@ -342,7 +342,7 @@ public class DynamicTabFragment extends BaseTitleFragment implements OnTabResele
 
 
     @Override
-    public void onTabReselect() {
+    public void onTabReselect() {   //在MainActivity里面的onReselect方法调用
         if (mCurFragment != null && mCurFragment instanceof OnTabReselectListener) {
             ((OnTabReselectListener) mCurFragment).onTabReselect();
         }

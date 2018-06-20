@@ -171,7 +171,7 @@ public class EmptyLayout extends LinearLayout implements
                     tv.setText(R.string.error_view_loading_local_friend);
                 } else {
 //                    tv.setText(R.string.error_view_loading);
-                    tv.setText("测试无后台接口 ---> ");
+                    tv.setText("测试无后台接口---> 加载中");
                     mLoading.stop();
                 }
                 clickEnable = false;

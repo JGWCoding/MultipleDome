@@ -189,7 +189,7 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
         }
     }
 
-    @Override  //控制下面的tab切换了 --> 上面tab也要切换下
+    @Override  //控制下面的tab切换了  上面的tab执行onTabReselect();
     public void onReselect(NavigationButton navigationButton) {
         Fragment fragment = navigationButton.getFragment();
         if (fragment != null
@@ -340,9 +340,9 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
     }
 
     @Override
-    public void onBackPressed() {   //是否有返回键
+    public void onBackPressed() {   //返回键重新处理
         for (TurnBackListener l : mTurnBackListeners) {
-            if (l.onTurnBack()) return;
+            if (l.onTurnBack()) return;     //mTurnBackListeners不会减少,但是里面由于各种原因返回false,这个应该要增加delete可以删除,不然一直add不好
         }
         boolean isDoubleClick = BaseApplication.get(AppConfig.KEY_DOUBLE_CLICK_EXIT, true);
         if (isDoubleClick) {

@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 import ziweiyang.toppine.com.oschinadome.R;
+import ziweiyang.toppine.com.oschinadome.utils.TLog;
 
 /**
  * 下拉刷新上拉加载控件，目前适用于RecyclerView
- *
  */
 public class RecyclerRefreshLayout extends SwipeRefreshLayout implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView mRecycleView;
@@ -77,17 +77,29 @@ public class RecyclerRefreshLayout extends SwipeRefreshLayout implements SwipeRe
                 mRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
+                        TLog.i("----", "滑动状态" + newState);
+                        if (newState == RecyclerView.SCROLL_STATE_SETTLING && canLoad() && mCanLoadMore) {
+                            //SCROLL_STATE_SETTLING 由于拖动速度快会滑动 SCROLL_STATE_IDLE 不滑动
+                            startRequestData();
+                        }
                     }
 
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                         if (canLoad() && mCanLoadMore) {
-                            loadData();
+                            startRequestData();
                         }
                     }
                 });
             }
+        }
+    }
+    boolean falg_StartRequestDate = true;
+    public synchronized void startRequestData() {
+        if (falg_StartRequestDate) {
+            falg_StartRequestDate = false;
+            mRecycleView.stopScroll();      //由于滑动太快会出现一个footerView(正在加载中),所以进行一个停止滑动
+            loadData();
         }
     }
 
@@ -122,6 +134,7 @@ public class RecyclerRefreshLayout extends SwipeRefreshLayout implements SwipeRe
     private void loadData() {
         if (listener != null) {
             setOnLoading(true);
+            TLog.e("滑动到最底部,并可以加载更多:触发加载更多");
             listener.onLoadMore();
         }
     }
@@ -163,6 +176,7 @@ public class RecyclerRefreshLayout extends SwipeRefreshLayout implements SwipeRe
         setOnLoading(false);
         setRefreshing(false);
         mHasMore = true;
+        falg_StartRequestDate = true;
     }
 
     /**

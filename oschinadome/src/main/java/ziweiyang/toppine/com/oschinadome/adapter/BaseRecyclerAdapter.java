@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ziweiyang.toppine.com.oschinadome.R;
+import ziweiyang.toppine.com.oschinadome.utils.TLog;
 
 
 /**
@@ -157,10 +158,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
                 }
                 break;
             default:
-                onBindDefaultViewHolder(holder, getItems().get(getIndex(position)), position);  //把itemView的展示交给子类实现
+                onBindDefaultViewHolder(holder, getItems().get(getIndex(position)), position);  //把itemView的展交给子类实现
                 break;
         }
-            Log.e("=====","holder.getItemViewType()"+holder.getItemViewType()+"mState"+mState);
+            TLog.i("=====","holder.getItemViewType()"+holder.getItemViewType()+"mState"+mState);
     }
 
 
@@ -322,7 +323,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void setState(int mState, boolean isUpdate) {    //一般用来隐藏footerView
+    public void setState(int mState, boolean isUpdate) {    //一般用来footerView的显示内容及隐藏
         this.mState = mState;
         if (isUpdate)
             updateItem(getItemCount() - 1);
